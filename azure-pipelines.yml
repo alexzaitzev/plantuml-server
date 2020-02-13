@@ -24,12 +24,8 @@ stages:
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'package'
-
-- stage: Deploy
-  jobs:
-  - job: Deploy
-    steps:
-    - task: PublishPipelineArtifact@1
+    - task: DownloadPipelineArtifact@2
       inputs:
-        path: $(System.DefaultWorkingDirectory)/$(Build.BuildId).zip
-        artifact: plantuml-server
+        buildType: 'current'
+        artifactName: 'plantuml-server'
+        targetPath: '$(Pipeline.Workspace)'
