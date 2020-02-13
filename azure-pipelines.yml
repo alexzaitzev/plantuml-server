@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-- stage: Build and Publish
+- stage: Build_Publish
   jobs:
   - job: Build_Publish
     steps:
