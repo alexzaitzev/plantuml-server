@@ -10,9 +10,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-- stage: Build
+- stage: Build and Publish
   jobs:
-  - job: Buikd 
+  - job: Build_Publish
     steps:
     - task: Maven@3
       inputs:
@@ -24,7 +24,8 @@ stages:
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'package'
-    - task: DownloadPipelineArtifact@2
+    - task: PublishBuildArtifacts@1
       inputs:
-        buildType: 'current'
-        targetPath: '$(Pipeline.Workspace)'
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'drop'
+        publishLocation: 'Container'
