@@ -28,11 +28,25 @@ stages:
     - task: CopyFiles@2
       inputs:
         Contents: 'target/*.war'
-        TargetFolder: $(Build.ArtifactStagingDirectory)
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
         CleanTargetFolder: true
+        flattenFolders: true
 
     - task: PublishBuildArtifacts@1
       inputs:
         pathtoPublish: $(Build.ArtifactStagingDirectory)
         artifactName: 'drop'
         publishLocation: 'Container'
+    
+    - task: InstallSSHKey@0
+      inputs:
+        knownHostsEntry: 'github.com,140.82.118.3 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
+        sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAsVV7V0Y0GhSCYHdFOfhNDsAjP5Cy5NtxkcP01/fq/mN1Bt+/KOlzz7JsgLwfxagBVQLVrDfZS43PhRG/c7fIuhLk/yl2CAfRUq1NViNTqBn8jwDkLQGgnYBHJcDy0YnyYPVvXgVL/KBitGVmc1yYS6L0OpBUirPH+/zT1r9S3TkpKHKrxM9+gsf/6LdwzA9Gj7UXzBUv3kJkYXb1kAylNWzbvu2dHE3yxR4zrENf8BTtBVbb1FzAggXh59q8CQiWW0mcLCz/WNaZ0OqFfVnI+1TbAyUTxlz7eFbCLZaxxTzw3x+HfxmXeEhpV962ocjbJf29UGVpdMPuffGBk7b9ww=='
+        sshKeySecureFile: 'azure-plantuml'
+
+    - task: CopyFilesOverSSH@0
+      inputs:
+        sshEndpoint: 'alex@plantuml.northeurope.cloudapp.azure.com'
+        contents: '**'
+        targetFolder: '/tmp'
+        failOnEmptySource: true
