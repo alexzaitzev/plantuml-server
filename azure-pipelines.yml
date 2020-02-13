@@ -27,5 +27,4 @@ stages:
     - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
-        artifactName: 'plantuml-server'
         targetPath: '$(Pipeline.Workspace)'
