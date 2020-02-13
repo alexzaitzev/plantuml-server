@@ -25,15 +25,14 @@ stages:
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'package'
 
+    - task: CopyFiles@2
+      inputs:
+        Contents: '**'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+        CleanTargetFolder: true
+
     - task: PublishBuildArtifacts@1
       inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        pathtoPublish: $(Build.ArtifactStagingDirectory)
         artifactName: 'drop'
         publishLocation: 'Container'
-
-    - task: DownloadPipelineArtifact@2
-      inputs:
-        buildType: 'current'
-        targetPath: '$(Pipeline.Workspace)/a'
-
-   
