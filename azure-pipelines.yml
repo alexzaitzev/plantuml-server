@@ -31,5 +31,5 @@ stages:
     steps:
     - task: PublishBuildArtifacts@1
       inputs:
-        pathToPublish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        pathToPublish: $(System.ArtifactsDirectory)/$(Build.BuildId).zip
         artifactName: plantuml-server
