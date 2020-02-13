@@ -27,7 +27,7 @@ stages:
 
     - task: CopyFiles@2
       inputs:
-        Contents: '*.war'
+        Contents: 'target/*.war'
         TargetFolder: $(Build.ArtifactStagingDirectory)
         CleanTargetFolder: true
 
